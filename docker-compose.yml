@@ -1,0 +1,29 @@
+version: '2'
+
+services:
+  symfonystart_nginx:
+    image: nginx:stable
+    networks:
+      - symfonystart
+    ports:
+      - "83:80"
+    volumes_from:
+      - symfonystart_phpfpm:ro
+    volumes:
+      - ./docker/nginx/sites.conf:/etc/nginx/conf.d/default.conf
+
+  symfonystart_phpfpm:
+    image: php:7.0-fpm
+    networks:
+      - symfonystart
+    expose:
+      - 9000
+    volumes:
+      - ./:/var/www/symfonystart
+      - ./docker/php-fpm/php.timezone.ini:/usr/local/etc/php/conf.d/timezone.ini
+      - ./docker/php-fpm/php.error.ini:/usr/local/etc/php/conf.d/error.ini
+    working_dir: /var/www/symfonystart
+
+networks:
+  symfonystart:
+    driver: bridge
