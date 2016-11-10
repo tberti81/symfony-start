@@ -1,0 +1,22 @@
+engines:
+  duplication:
+    enabled: true
+    config:
+      languages:
+      - php
+  fixme:
+    enabled: true
+  phpmd:
+    enabled: true
+ratings:
+  paths:
+  - "src/**"
+  - "tests/**"
+  - "**.php"
+exclude_paths:
+- app/
+- bin/
+- docker/
+- var/
+- vendor/
+- web/
