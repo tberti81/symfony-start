@@ -38,7 +38,16 @@ class AnimalSortCommand extends Command
 	 */
 	protected function execute(InputInterface $input, OutputInterface $output)
 	{
+		/*
+		 * Get the animals as an array.
+		 */
+
 		$inputAnimals = $input->getArgument('animals');
+
+
+		/*
+		 * Make objects from the animals.
+		 */
 
 		/** @var Animal[] $animals */
 		$animals = [];
@@ -59,6 +68,10 @@ class AnimalSortCommand extends Command
 			$animals[$this->getAnimalId($animal)] = $animal;
 		}
 
+		/*
+		 * Make an array to be able to multisort.
+		 */
+
 		foreach ($animals as $key => $animal)
 		{
 			$animalsToSort[$key] = [
@@ -70,7 +83,15 @@ class AnimalSortCommand extends Command
 			$numberOfLegs[] = $animal->getNumberOfLegs();
 		}
 
+		/*
+		 * Sort.
+		 */
+
 		array_multisort($numberOfLegs, SORT_DESC, $names, SORT_ASC, $animalsToSort);
+
+		/*
+		 * Output the result.
+		 */
 
 		$output->writeln('Here are the sorted animals:');
 
